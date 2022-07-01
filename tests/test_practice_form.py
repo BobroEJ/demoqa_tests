@@ -1,16 +1,13 @@
+import os
+
 import pytest
 from selene import have
 from selene.support.shared import browser
-# from selenium.webdriver.common.by import By
 
 
 def test_practice_form():
     browser.open('automation-practice-form')
-    browser.should(have.title('ToolsQA'))
-
-    # browser.element('#firstName').type('Evgeny')
-    browser.element('//*[@id="firstName"]').type('Evgeny')
-
+    browser.element('#firstName').type('Evgeny')
     browser.element('#lastName').type('Tverdun')
     browser.element('#userEmail').type('tverdune@ya.ru')
     browser.element('[for="gender-radio-1"]').click()
