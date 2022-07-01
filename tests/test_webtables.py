@@ -26,12 +26,6 @@ def test_webtables():
     #delete 3rd string
     browser.element('#delete-record-3').click()
 
-    l = [
-        ['Cierra', 'Vega', '39', 'cierra@example.com', '10000', 'Insurance'],
-        ['Bonnie', 'Wotson', '33', 'bw@ms.ru', '22000', 'Transport'],
-        ['Evgeny', 'Tverdun', '40', 'tverdune@ya.ru', '15000', 'IT']
-        ]
-
     browser.element('//*[@role="rowgroup"]').element('.//*[@role="gridcell"]').should(have.exact_text('Cierra'))
     browser.element('//*[@role="rowgroup"]').element('.//*[@role="gridcell"][2]').should(have.exact_text('Vega'))
     browser.element('//*[@role="rowgroup"]').element('.//*[@role="gridcell"][3]').should(have.exact_text('39'))
