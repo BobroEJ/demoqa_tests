@@ -19,4 +19,4 @@ class Table:
         self.result = result
 
     def result_assert(self):
-        return browser.all('.table-responsive tbody tr')[self.row_num].all('td')[1].should(have.exact_text(self.result))
+        browser.all('.table-responsive tbody tr')[self.row_num].all('td')[1].should(have.exact_text(self.result))

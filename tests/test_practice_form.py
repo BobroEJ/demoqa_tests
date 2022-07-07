@@ -4,7 +4,7 @@ from selene.support.shared import browser
 
 from demoqa_tests.controls.datepicker import Datepicker
 from demoqa_tests.controls.dropdown import Dropdown
-from demoqa_tests.controls.resource import resource
+from demoqa_tests.utils import resource
 from demoqa_tests.controls.table import Table
 from demoqa_tests.controls.tags_input import tags_input
 
