@@ -1,20 +1,14 @@
 from typing import Optional
 
 from selene import have
-from selene.core.entity import Element
 from selene.support.shared import browser
 
 
-class TagsInput:
-
-    def __init__(self, element: Element):
-        self.element = element
-
-    def add_by_click(self, from_: str, /, *, autocomplete: Optional[str] = None):
-        self.element.type(from_)
+def tags_input(element, from_: str, /, *, autocomplete: Optional[str] = None):
+    if autocomplete:
+        element.type(from_)
         browser.all(
             '.subjects-auto-complete__option'
-        ).element_by(have.text(autocomplete or from_)).click()
-
-    def add_by_tab(self, from_: str, /):
-        self.element.type(from_).press_tab()
+        ).element_by(have.text(autocomplete)).click()
+    else:
+        element.type(from_).press_tab()

@@ -1,5 +1,4 @@
-from selene import have, command
-from selene.core.entity import Element
+from selene import command, have
 from selene.support.shared import browser
 
 
@@ -7,7 +6,7 @@ from demoqa_tests.controls.datepicker import Datepicker
 from demoqa_tests.controls.dropdown import Dropdown
 from demoqa_tests.controls.resource import resource
 from demoqa_tests.controls.table import Table
-from demoqa_tests.controls.tags_input import TagsInput
+from demoqa_tests.controls.tags_input import tags_input
 
 
 def test_practice_form():
@@ -25,9 +24,14 @@ def test_practice_form():
 
     Datepicker(browser.element('#dateOfBirthInput'), 1982, 5, 1).set_date_by_clicks()
 
+    subjects = browser.element('#subjectsInput')
+    tags_input(subjects, 'Comp', autocomplete='Computer Science')
+    tags_input(subjects, 'Eng')
+    '''
     subjects = TagsInput(browser.element('#subjectsInput'))
     subjects.add_by_click('Comp', autocomplete='Computer Science')
     subjects.add_by_tab('eng')
+    '''
 
     sports_hobby = browser.element('#hobbies-checkbox-1').following_sibling()
     sports_hobby.click()
@@ -43,15 +47,17 @@ def test_practice_form():
 
     browser.element('#submit').perform(command.js.click)
 
+    def table(row_num, result):
+        return browser.all('.table-responsive tbody tr')[row_num].all('td')[1].should(have.exact_text(result))
     # Then
-
-    Table(0, 'Evgeny Tverdun')
-    Table(1, 'tverdune@ya.ru')
-    Table(2, 'Male')
-    Table(3, '9034334637')
-    Table(4, '01 May,1982')
-    Table(5, 'Computer Science, English')
-    Table(6, 'Sports, Reading')
-    Table(7, 'pic.jpg')
-    Table(8, 'Home sweet home')
-    Table(9, 'NCR Noida')
+    result_table = Table
+    result_table(0, 'Evgeny Tverdun').result_assert()
+    result_table(1, 'tverdune@ya.ru').result_assert()
+    result_table(2, 'Male').result_assert()
+    result_table(3, '9034334637').result_assert()
+    result_table(4, '01 May,1982').result_assert()
+    result_table(5, 'Computer Science, English').result_assert()
+    result_table(6, 'Sports, Reading').result_assert()
+    result_table(7, 'pic.jpg').result_assert()
+    result_table(8, 'Home sweet home').result_assert()
+    result_table(9, 'NCR Noida').result_assert()
