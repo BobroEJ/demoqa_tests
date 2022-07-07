@@ -8,6 +8,6 @@ class Table:
         self.row_num = row_num
         self.result = result
 
-    def table(self):
+    def result_assert(self):
         browser.all('.table-responsive tbody tr')[self.row_num].all('td')[1].should(have.exact_text(self.result))
 

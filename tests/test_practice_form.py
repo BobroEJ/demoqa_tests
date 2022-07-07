@@ -44,14 +44,14 @@ def test_practice_form():
     browser.element('#submit').perform(command.js.click)
 
     # Then
-
-    Table(0, 'Evgeny Tverdun')
-    Table(1, 'tverdune@ya.ru')
-    Table(2, 'Male')
-    Table(3, '9034334637')
-    Table(4, '01 May,1982')
-    Table(5, 'Computer Science, English')
-    Table(6, 'Sports, Reading')
-    Table(7, 'pic.jpg')
-    Table(8, 'Home sweet home')
-    Table(9, 'NCR Noida')
+    result_table = Table
+    result_table(0, 'Evgeny Tverdun').result_assert()
+    result_table(1, 'tverdune@ya.ru').result_assert()
+    result_table(2, 'Male').result_assert()
+    result_table(3, '9034334637').result_assert()
+    result_table(4, '01 May,1982').result_assert()
+    result_table(5, 'Computer Science, English').result_assert()
+    result_table(6, 'Sports, Reading').result_assert()
+    result_table(7, 'pic.jpg').result_assert()
+    result_table(8, 'Home sweet home').result_assert()
+    result_table(9, 'NCR Noida').result_assert()
