@@ -8,7 +8,7 @@ class Table:
         self.row_num = row_num
 
     def should_have(self, result):
-        return browser.all('.table-responsive tbody tr')[self.row_num].all('td')[1].should(have.exact_text(result))
+        browser.all('.table-responsive tbody tr')[self.row_num].all('td')[1].should(have.exact_text(result))
 
 
 '''
