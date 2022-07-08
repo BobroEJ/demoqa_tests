@@ -3,7 +3,7 @@ from selene.support.shared import browser
 
 class Datepicker:
 
-    def __init__(self, element, year, month, day):
+    def __init__(self, element, year: int, month: int, day: int):
         self.element = element
         self.year = year
         self.month = str(month - 1)
