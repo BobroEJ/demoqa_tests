@@ -2,56 +2,42 @@ from selene import have, command
 from selene.core.entity import Element
 from selene.support.shared import browser
 
-
+from demoqa_tests.Pages import Student_registration_form_page
 from demoqa_tests.controls.datepicker import Datepicker
 from demoqa_tests.controls.dropdown import Dropdown
-from demoqa_tests.controls.resource import resource
+from demoqa_tests.data import User
+from demoqa_tests.utils import resource
 from demoqa_tests.controls.table import Table
 from demoqa_tests.controls.tags_input import TagsInput
 
 
 def test_practice_form():
     # Pre
-    browser.open('automation-practice-form')
+    form = Student_registration_form_page(User)
+    form.open_browser()
     # When
-    browser.element('#firstName').type('Evgeny')
-    browser.element('#lastName').type('Tverdun')
-    browser.element('#userEmail').type('tverdune@ya.ru')
-
-    male_gender = browser.element('[for="gender-radio-1"]')
-    male_gender.click()
-
-    browser.element('#userNumber').type('9034334637')
-
-    Datepicker(browser.element('#dateOfBirthInput'), 1982, 5, 1).set_date_by_clicks()
-
-    subjects = TagsInput(browser.element('#subjectsInput'))
-    subjects.add_by_click('Comp', autocomplete='Computer Science')
-    subjects.add_by_tab('eng')
-
-    sports_hobby = browser.element('#hobbies-checkbox-1').following_sibling()
-    sports_hobby.click()
-    reading_hobby = browser.element('#hobbies-checkbox-2').following_sibling()
-    reading_hobby.click()
-
-    browser.element('#uploadPicture').send_keys(resource('pic.jpg'))
-
-    browser.element('#currentAddress').type('Home sweet home')
-
-    Dropdown(browser.element('#state')).select_by_click(option='NCR')
-    Dropdown(browser.element('#city input')).autocomplete(option='noi')
-
-    browser.element('#submit').perform(command.js.click)
-
+    form.set_first_name()
+    form.set_last_name()
+    form.set_email()
+    form.set_gender()
+    form.set_mobile_number()
+    form.set_birth_day()
+    form.set_subjects()
+    form.set_hobbies()
+    form.set_picture()
+    form.set_address()
+    form.set_state()
+    form.set_city()
+    form.submit_form()
     # Then
     result_table = Table
-    result_table(0, 'Evgeny Tverdun').result_assert()
-    result_table(1, 'tverdune@ya.ru').result_assert()
-    result_table(2, 'Male').result_assert()
-    result_table(3, '9034334637').result_assert()
-    result_table(4, '01 May,1982').result_assert()
-    result_table(5, 'Computer Science, English').result_assert()
-    result_table(6, 'Sports, Reading').result_assert()
-    result_table(7, 'pic.jpg').result_assert()
-    result_table(8, 'Home sweet home').result_assert()
-    result_table(9, 'NCR Noida').result_assert()
+    result_table(0).should_have('Evgeny Tverdun')
+    result_table(1).should_have('tverdune@ya.ru')
+    result_table(2).should_have('Male')
+    result_table(3).should_have('9034334637')
+    result_table(4).should_have('01 May,1982')
+    result_table(5).should_have('Computer Science, English')
+    result_table(6).should_have('Sports, Reading, Music')
+    result_table(7).should_have('pic.jpg')
+    result_table(8).should_have('Home sweet home')
+    result_table(9).should_have('NCR Noida')
