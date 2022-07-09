@@ -7,17 +7,16 @@ class Table:
     def __init__(self, row_num):
         self.row_num = row_num
 
-    def should_have(self, result):
-        browser.all('.table-responsive tbody tr')[self.row_num].all('td')[1].should(have.exact_text(result))
+    def should_have(self, *results):
+        if len(results) == 1:
+            browser.all('.table-responsive tbody tr')[self.row_num].all('td')[1].should(have.exact_text(results[0]))
+        else:
+            for result in results:
+                browser.all('.table-responsive tbody tr')[self.row_num].all('td')[1].should(have.text(result))
 
-
-'''
-class Table:
-
-    def __init__(self, row_num, result):
-        self.row_num = row_num
-        self.result = result
-
-    def result_assert(self):
-        browser.all('.table-responsive tbody tr')[self.row_num].all('td')[1].should(have.exact_text(self.result))
-'''
+    '''
+    OR W/O IF AND EXACT_TEXT:
+    def should_have(self, *results):
+        for result in results:
+            browser.all('.table-responsive tbody tr')[self.row_num].all('td')[1].should(have.text(result))
+    '''

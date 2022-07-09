@@ -12,7 +12,7 @@ class User:
     b_year = 1982
     b_month = 5
     b_day = 1
-    subjects = ['Computer Science', 'English']
+    subjects = 'Computer Science', 'English'
     hobbies = ['Sports', 'Reading', 'Music']
     picture = 'pic.jpg'
     address = 'Home sweet home'
