@@ -1,6 +1,9 @@
 import allure
 from calendar import month_name
 
+from selene.support.shared import browser
+
+from demoqa_tests import utils
 from demoqa_tests.data import User, Gender, Hobbie
 from demoqa_tests.model import app
 
@@ -67,3 +70,4 @@ def test_practice_form():
         app.registered_user_dialog.address.should_have(student.address)
     with allure.step('Проверяем штат и город'):
         app.registered_user_dialog.state_and_city.should_have(student.state, student.city)
+

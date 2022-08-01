@@ -4,7 +4,6 @@ from selene.support.shared import browser
 from demoqa_tests.data import Gender, Hobbie
 from demoqa_tests.model.controls.datepicker import Datepicker
 from demoqa_tests.model.controls.dropdown import Dropdown
-from demoqa_tests.model.controls.table_row import TableRow
 from demoqa_tests.model.controls.tags_input import TagsInput
 from demoqa_tests.utils import resource
 
