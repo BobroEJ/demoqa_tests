@@ -3,7 +3,13 @@ from selene.support.shared import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+import sys
+import os
+conf_path = os.getcwd()
+sys.path.append(conf_path)
+sys.path.append(conf_path + '\demoqa_tests')
 from demoqa_tests import utils
+
 
 
 @pytest.fixture(scope='function', autouse=True)

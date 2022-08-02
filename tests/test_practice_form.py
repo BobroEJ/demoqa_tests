@@ -1,9 +1,6 @@
 import allure
 from calendar import month_name
 
-from selene.support.shared import browser
-
-from demoqa_tests import utils
 from demoqa_tests.data import User, Gender, Hobbie
 from demoqa_tests.model import app
 
