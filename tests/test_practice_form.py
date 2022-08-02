@@ -1,57 +1,73 @@
-from selene import have, command
-from selene.core.entity import Element
+import allure
+from calendar import month_name
+
 from selene.support.shared import browser
 
-
-from demoqa_tests.controls.datepicker import Datepicker
-from demoqa_tests.controls.dropdown import Dropdown
-from demoqa_tests.utils import resource
-from demoqa_tests.controls.table import Table
-from demoqa_tests.controls.tags_input import TagsInput
+from demoqa_tests import utils
+from demoqa_tests.data import User, Gender, Hobbie
+from demoqa_tests.model import app
 
 
 def test_practice_form():
     # Given
-    browser.open('automation-practice-form')
+    with allure.step('Открываем страницу'):
+        app.registration_page.open()
+    with allure.step('Создаём студента'):
+        student = User(
+            first_name='Evgeny',
+            last_name='Tverdun',
+            email='tverdune@ya.ru',
+            gender=Gender.Male,
+            mobile_number='9034334637',
+            birthday_year=1982,
+            birthday_month=5,
+            birthday_day=1,
+            subjects=['Computer Science', 'English'],
+            hobbies=[Hobbie.Sports, Hobbie.Reading, Hobbie.Music],
+            picture='pic.jpg',
+            address='Home sweet home',
+            state='NCR',
+            city='Noida'
+        )
+
     # When
-    browser.element('#firstName').type('Evgeny')
-    browser.element('#lastName').type('Tverdun')
-    browser.element('#userEmail').type('tverdune@ya.ru')
-
-    male_gender = browser.element('[for="gender-radio-1"]')
-    male_gender.click()
-
-    browser.element('#userNumber').type('9034334637')
-
-    Datepicker(browser.element('#dateOfBirthInput'), 1982, 5, 1).set_date_by_clicks()
-
-    subjects = TagsInput(browser.element('#subjectsInput'))
-    subjects.add_by_click('Comp', autocomplete='Computer Science')
-    subjects.add_by_tab('eng')
-
-    sports_hobby = browser.element('#hobbies-checkbox-1').following_sibling()
-    sports_hobby.click()
-    reading_hobby = browser.element('#hobbies-checkbox-2').following_sibling()
-    reading_hobby.click()
-
-    browser.element('#uploadPicture').send_keys(resource('pic.jpg'))
-
-    browser.element('#currentAddress').type('Home sweet home')
-
-    Dropdown(browser.element('#state')).select_by_click(option='NCR')
-    Dropdown(browser.element('#city input')).autocomplete(option='noi')
-
-    browser.element('#submit').perform(command.js.click)
+    with allure.step('Вносим данные в форму'):
+        (app.registration_page
+         .set_first_name(student.first_name)
+         .set_last_name(student.last_name)
+         .set_email(student.email)
+         .set_gender(student.gender)
+         .set_mobile_number(student.mobile_number)
+         .set_birth_day(student.birthday_day, student.birthday_month, student.birthday_year)
+         .set_subjects(student.subjects)
+         .set_hobbies(student.hobbies)
+         .set_picture(student.picture)
+         .set_address(student.address)
+         .set_state(student.state)
+         .set_city(student.city)
+         .submit_form())
 
     # Then
-    result_table = Table
-    result_table(0, 'Evgeny Tverdun').result_assert()
-    result_table(1, 'tverdune@ya.ru').result_assert()
-    result_table(2, 'Male').result_assert()
-    result_table(3, '9034334637').result_assert()
-    result_table(4, '01 May,1982').result_assert()
-    result_table(5, 'Computer Science, English').result_assert()
-    result_table(6, 'Sports, Reading').result_assert()
-    result_table(7, 'pic.jpg').result_assert()
-    result_table(8, 'Home sweet home').result_assert()
-    result_table(9, 'NCR Noida').result_assert()
+    with allure.step('Проверяем полное имя'):
+        app.registered_user_dialog.full_name.should_have(student.first_name, student.last_name)
+    with allure.step('Проверяем email'):
+        app.registered_user_dialog.email.should_have(student.email)
+    with allure.step('Проверяем пол'):
+        app.registered_user_dialog.gender.should_have(student.gender.value)
+    with allure.step('Проверяем ноиер телефона'):
+        app.registered_user_dialog.mobile_number.should_have(student.mobile_number)
+    with allure.step('Проверяем дату рождения'):
+        app.registered_user_dialog.date_of_birth.should_have(
+            f'{student.birthday_day} {month_name[student.birthday_month]},{student.birthday_year}')
+    with allure.step('Проверяем предменты'):
+        app.registered_user_dialog.subjects.should_have(student.subjects[0], student.subjects[1])
+    with allure.step('Проверяем хобби'):
+        app.registered_user_dialog.hobbies.should_have(student.hobbies[0].value, student.hobbies[1].value,
+                                                       student.hobbies[2].value)
+    with allure.step('Проверяем путь к картинке'):
+        app.registered_user_dialog.picture.should_have(student.picture)
+    with allure.step('Проверяем адрес'):
+        app.registered_user_dialog.address.should_have(student.address)
+    with allure.step('Проверяем штат и город'):
+        app.registered_user_dialog.state_and_city.should_have(student.state, student.city)
+
