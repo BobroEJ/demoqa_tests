@@ -13,9 +13,11 @@ sys.path.append(conf_path + '\demoqa_tests')
 
 from demoqa_tests import utils
 
+
 @pytest.fixture(scope='session', autouse=True)
 def load_env():
     load_dotenv()
+
 
 @pytest.fixture(scope='function', autouse=True)
 def browser_management():

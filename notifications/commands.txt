@@ -1,0 +1,16 @@
+5580345959:AAEZ6mCD7xSY5iQCCgIVJ92a105R2-oRmU0
+-1001703569250
+
+https://api.telegram.org/bot5580345959:AAEZ6mCD7xSY5iQCCgIVJ92a105R2-oRmU0/getUpdates
+
+curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": -1001703569250, "text": "This is a test from curl", "disable_notification": true}' https://api.telegram.org/bot5580345959:AAEZ6mCD7xSY5iQCCgIVJ92a105R2-oRmU0/sendMessage
+
+curl -X POST \
+     -H 'Content-Type: application/json' \
+     -d '{"chat_id": "-1001703569250", "text": "This is a test from curl", "disable_notification": true}' \
+     https://api.telegram.org/bot5580345959:AAEZ6mCD7xSY5iQCCgIVJ92a105R2-oRmU0/sendMessage
+
+
+java "-DconfigFile=notifications/config/json" -jar notifications/allure-notifications-4.2.1.jar
+
+
